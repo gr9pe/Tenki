@@ -1,0 +1,4 @@
+<Server port="8005" shutdown="SHUTDOWN">
+<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
+       pattern="combined" />
+

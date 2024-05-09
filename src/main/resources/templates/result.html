@@ -1,0 +1,28 @@
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Tenki</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+</head>
+<body>
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <a href="/">Back</a>
+    </button>
+    <table class="table-auto flex items-center justify-center">
+        <tbody>
+            <tr>
+                <th class="px-4 py-2">天気</th>
+                <th class="px-4 py-2">気温</th>
+                <th class="px-4 py-2">風速</th>
+                <th class="px-4 py-2">雲量</th>
+            </tr>
+            <tr>
+                <td class="border px-4 py-2"><p th:text="${tenki.weather}"></p></td>
+                <td class="border px-4 py-2"><p th:text="${tenki.temp}">℃</p></td>
+                <td class="border px-4 py-2"><p th:text="${tenki.wind}">m</p></td>
+                <td class="border px-4 py-2"><p th:text="${tenki.clouds}">%</p></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
