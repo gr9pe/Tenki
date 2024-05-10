@@ -66,11 +66,16 @@ public class APIClient {
             writer.close();
 
 			if (con.getResponseCode() == 200) { 
-				return objectMapper.readTree(new ResponseReader().read(con)).get("choices").get(0).get("message").get("content").toString();
+				String res = objectMapper.readTree(new ResponseReader().read(con)).get("choices").get(0).get("message").get("content").toString();
+				return removeSymbols(res);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "取得できませんでした。";
+	}
+
+	public String removeSymbols(String s) {
+		return s.replaceAll("[^a-zA-Z0-9\\s/\\-]", "");
 	}
 }

@@ -1,6 +1,6 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>Tenki</title>
+    <title>今日の天気</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" th:href="@{/css/main.css}" />
 </head>
@@ -18,9 +18,9 @@
             </tr>
             <tr>
                 <td class="border px-4 py-2"><p th:text="${tenki.weather}"></p></td>
-                <td class="border px-4 py-2"><p th:text="${tenki.temp}">℃</p></td>
-                <td class="border px-4 py-2"><p th:text="${tenki.wind}">m</p></td>
-                <td class="border px-4 py-2"><p th:text="${tenki.clouds}">%</p></td>
+                <td class="border px-4 py-2"><p th:text="${tenki.temp}"></p>℃</td>
+                <td class="border px-4 py-2"><p th:text="${tenki.wind}"></p>m</td>
+                <td class="border px-4 py-2"><p th:text="${tenki.clouds}"></p>%</td>
             </tr>
         </tbody>
     </table>

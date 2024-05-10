@@ -38,7 +38,7 @@ public class TenkiController {
    
     @ModelAttribute
     public Tenki getWeather(String city){
-        String url = new StringBuilder("https://api.openweathermap.org/data/2.5/weather?q=").append(city).append("&appid=").toString();
+        String url = new StringBuilder("https://api.openweathermap.org/data/2.5/weather?q=").append(city).append(",jp&lang=ja&units=metric&appid=").toString();
         String TENKI_API_KEY = Dotenv.configure().load().get("TENKI_API_KEY");
         JsonNode json = new APIClient(TENKI_API_KEY,url).getJsonNode();
         if(json != null){
