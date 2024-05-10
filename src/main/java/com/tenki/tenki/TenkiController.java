@@ -52,7 +52,7 @@ public class TenkiController {
     public String getRecommend(String weather){
         String url = "https://api.openai.com/v1/chat/completions";
         APIClient openAI = new APIClient(Dotenv.configure().load().get("OPENAI_API_KEY"),url);
-        return openAI.getRecommend("Today's weather:"+ weather +". Tell me the best song for today's weather") ;
+        return openAI.getRecommend("Today's weather:"+ weather +". Please tell me a song that matches today's weather. Please answer with only the song title and artist name, without line breaks.") ;
     }
     
 }
