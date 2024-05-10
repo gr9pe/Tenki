@@ -25,12 +25,14 @@ public class APIClient {
 
 	public APIClient(){
 	}
+
 	public APIClient(String API_KEY, String BASE_URL) {
 		this.objectMapper = new ObjectMapper();
 		this.API_KEY = API_KEY;
 		this.BASE_URL = BASE_URL;
 	}
 
+	//APIにリクエストしてJsonNode返す
 	public JsonNode getJsonNode(){
 		try {
 			HttpURLConnection con = (HttpURLConnection) new URL(BASE_URL+API_KEY).openConnection();
@@ -45,10 +47,10 @@ public class APIClient {
 		return null;
 	}
 
+	//ChatGPTにプロンプト渡してレスポンス内のメッセージを返す
 	public String getRecommend(String prompt){
 		String model = "gpt-3.5-turbo"; 
-		String body = "{\"model\": \"" + model + "\", \"messages\": [{\"role\": \"user\", \"content\": \"" + prompt
-                    + "\"}]}";
+		String body = "{\"model\": \"" + model + "\", \"messages\": [{\"role\": \"user\", \"content\": \"" + prompt + "\"}]}";
 		try{
 			HttpURLConnection con = (HttpURLConnection) new URL(BASE_URL).openConnection();
 			con.setRequestMethod("POST");
@@ -64,14 +66,11 @@ public class APIClient {
             writer.close();
 
 			if (con.getResponseCode() == 200) { 
-				return objectMapper.readTree(new ResponseReader().read(con))
-					.get("choices").get(0).get("message").get("content")
-					.toString();
+				return objectMapper.readTree(new ResponseReader().read(con)).get("choices").get(0).get("message").get("content").toString();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
-		
+		return "取得できませんでした。";
 	}
 }
