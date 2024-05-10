@@ -1,5 +1,11 @@
 package com.tenki.tenki;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -7,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.databind.JsonNode;
+
+import io.github.cdimascio.dotenv.Dotenv;
 
 import org.springframework.ui.Model;    
 
@@ -22,6 +30,7 @@ public class TenkiController {
         Tenki tenki = getWeather(city);
         if(tenki !=  null){
             model.addAttribute("tenki",tenki);
+            model.addAttribute("music",getRecommend(tenki.getWeather()));
             return "result";
         }
         return "fail";
@@ -29,7 +38,9 @@ public class TenkiController {
    
     @ModelAttribute
     public Tenki getWeather(String city){
-        JsonNode json = new APIClient().callAPI(city);
+        String url = new StringBuilder("https://api.openweathermap.org/data/2.5/weather?q=").append(city).append("&appid=").toString();
+        String TENKI_API_KEY = Dotenv.configure().load().get("TENKI_API_KEY");
+        JsonNode json = new APIClient(TENKI_API_KEY,url).getJsonNode();
         if(json != null){
             Tenki tenki = new Tenki(json);
             return tenki != null ? tenki : null;
@@ -38,5 +49,10 @@ public class TenkiController {
         } 
     }
 
+    public String getRecommend(String weather){
+        String url = "https://api.openai.com/v1/chat/completions";
+        APIClient openAI = new APIClient(Dotenv.configure().load().get("OPENAI_API_KEY"),url);
+        return openAI.getRecommend("Today's weather:"+ weather +". Tell me the best song for today's weather") ;
+    }
     
 }
